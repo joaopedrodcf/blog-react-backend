@@ -9,12 +9,28 @@ module.exports = app => {
     const { email, password } = body;
 
     const user = new User();
-    user.email = email;
-    user.password = password;
-    user.save(err => {
-      if (err) return res.json({ success: false, error: err });
 
-      return res.json({ success: true });
+    if (!email) {
+      res.status(400).end({
+        message: 'Email cant be empty'
+      });
+    }
+
+    if (!password) {
+      return res.status(400).send({
+        message: 'Password cannot be blank'
+      });
+    }
+
+    user.email = email.toLowerCase().trim();
+    user.password = user.generateHash(password);
+
+    user.save(err => {
+      if (err) return res.status(400).json({ message: err });
+
+      return res.status(201).json({ message: 'User created' });
     });
+
+    return res.status(400).json({ message: 'Generic error' });
   });
 };
