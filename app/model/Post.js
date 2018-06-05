@@ -1,10 +1,6 @@
 const mongoose = require('mongoose');
 
 const PostSchema = new mongoose.Schema({
-  id: {
-    type: String,
-    default: ''
-  },
   title: {
     type: String,
     default: ''
@@ -21,10 +17,7 @@ const PostSchema = new mongoose.Schema({
     type: String,
     default: ''
   },
-  date: {
-    type: String,
-    default: ''
-  }
+  date: { type: Date, default: Date.now }
 });
 
 module.exports = mongoose.model('Post', PostSchema);

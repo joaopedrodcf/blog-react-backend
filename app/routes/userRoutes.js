@@ -33,7 +33,7 @@ module.exports = app => {
         return res.status(400).send({ message: 'User or password dont match' });
 
       user.email = emailTransformed;
-      user.password = user.generateHash(password);
+      user.password = password;
 
       user.save(err => {
         if (err) return res.status(400).send({ message: err });
