@@ -1,5 +1,4 @@
 /* eslint-disable consistent-return */
-
 const User = require('../model/User');
 
 module.exports = app => {
