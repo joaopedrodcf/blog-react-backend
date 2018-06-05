@@ -12,7 +12,7 @@ npm init
 
 Dependencys
 ```
-yarn add express dotenv cors body-parser mongoose
+yarn add express dotenv cors body-parser mongoose bcrypt
 ```
 
 ```
