@@ -4,36 +4,33 @@ const User = require('../model/User');
 
 module.exports = app => {
   app.post('/api/signup', (req, res) => {
-    const { body } = req;
-
     const user = new User();
 
-    Object.assign(user, body);
-
-    /*
-    Verify if the user exists
-    If not create the user
-    */
+    console.log();
+    Object.assign(user, req.body);
 
     user.save(err => {
       if (err) return res.status(400).send({ message: err });
 
+      req.session.userId = user._id;
+      console.log(req.session);
       return res.status(201).send({ message: 'User created' });
     });
   });
 
   app.post('/api/signin', (req, res) => {
     const { email, password } = req.body;
-
+    console.log(req.session.userId);
     User.findOne({ email }, (err, user) => {
       if (err) throw err;
 
-      // test a matching password
       user.comparePassword(password, (error, isMatch) => {
         if (error) return res.status(400).send({ message: err });
 
         if (isMatch) {
-          return res.status(201).send({ message: 'Login with success' });
+          req.session.userId = user._id;
+          console.log(req.session);
+          return res.status(200).send({ message: 'Login with success' });
         }
 
         return res

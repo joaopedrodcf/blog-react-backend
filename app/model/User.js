@@ -23,12 +23,9 @@ const UserSchema = new mongoose.Schema({
 
 UserSchema.pre('save', function(next) {
   const user = this;
-  console.log(user.password);
   // hash the password along with our new salt
   bcrypt.hash(user.password, 10, (err, hash) => {
     if (err) return next(err);
-
-    console.log(hash);
 
     // override the cleartext password with the hashed one
     user.password = hash;
@@ -39,8 +36,6 @@ UserSchema.pre('save', function(next) {
 UserSchema.methods.comparePassword = function(candidatePassword, cb) {
   bcrypt.compare(candidatePassword, this.password, (err, isMatch) => {
     if (err) return cb(err);
-
-    console.log(isMatch);
 
     cb(null, isMatch);
   });
