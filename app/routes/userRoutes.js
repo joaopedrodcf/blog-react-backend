@@ -1,40 +1,78 @@
 /* eslint-disable consistent-return */
 /* eslint-disable no-underscore-dangle */
+
+// AuthController.js
+const jwt = require('jsonwebtoken');
+const config = require('../../config');
+
 const User = require('../model/User');
 
 module.exports = app => {
   app.post('/api/register', (req, res) => {
     const user = new User();
 
-    console.log('register');
-
     Object.assign(user, req.body);
 
     user.save(err => {
       if (err) return res.status(400).send({ message: err });
 
-      // req.session.userId = user._id;
+      console.log(config.secret);
+      // create a token
+      const token = jwt.sign({ id: user._id }, config.secret, {
+        expiresIn: 86400 // expires in 24 hours
+      });
 
-      console.log(req.session);
-      return res.status(201).send({ message: 'User created' });
+      return res.status(200).send({ auth: true, token });
+    });
+  });
+
+  app.get('/api/me', (req, res) => {
+    const token = req.headers['x-access-token'];
+
+    if (!token)
+      return res
+        .status(401)
+        .send({ auth: false, message: 'No token provided.' });
+
+    jwt.verify(token, config.secret, (err, decoded) => {
+      if (err)
+        return res
+          .status(500)
+          .send({ auth: false, message: 'Failed to authenticate token.' });
+
+      User.findById(
+        decoded.id,
+        { password: 0 }, // projection
+        (error, user) => {
+          if (error)
+            return res
+              .status(500)
+              .send('There was a problem finding the user.');
+
+          if (!user) return res.status(404).send('No user found.');
+
+          res.status(200).send(user);
+        }
+      );
     });
   });
 
   app.post('/api/login', (req, res) => {
     const { email, password } = req.body;
-    console.log(req.session.userId);
+
     User.findOne({ email }, (err, user) => {
-      if (err) throw err;
+      if (err) return res.status(500).send('Error on the server.');
+      if (!user) return res.status(404).send('No user found.');
 
       user.comparePassword(password, (error, isMatch) => {
-        if (error) return res.status(400).send({ message: err });
+        if (error) return res.status(401).send({ auth: false, token: null });
 
         if (isMatch) {
-          // req.session.userId = user._id;
+          const token = jwt.sign({ id: user._id }, config.secret, {
+            expiresIn: 86400 // expires in 24 hours
+          });
 
-          req.session.user = user;
-          console.log(req.session);
-          return res.status(200).send({ message: 'Login with success' });
+          return res.status(200).send({ auth: true, token });
         }
 
         return res
@@ -44,17 +82,5 @@ module.exports = app => {
     });
   });
 
-  app.get('/api/logout', (req, res, next) => {
-    console.log(req.session);
-
-    if (req.session) {
-      // delete session object
-      req.session.destroy(err => {
-        if (err) {
-          return next(err);
-        }
-        return res.status(200).send({ message: 'Logout with success' });
-      });
-    }
-  });
+  // Dont forget that logout is not needed , when the user presses logout on client side, client side only needs to destroy the token
 };
