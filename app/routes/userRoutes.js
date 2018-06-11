@@ -1,11 +1,14 @@
 /* eslint-disable consistent-return */
 /* eslint-disable no-underscore-dangle */
+/* eslint-disable no-unused-vars */
 
 // AuthController.js
 const jwt = require('jsonwebtoken');
 const config = require('../../config');
 
 const User = require('../model/User');
+
+const verifyToken = require('./verifyToken');
 
 module.exports = app => {
   app.post('/api/register', (req, res) => {
@@ -16,7 +19,6 @@ module.exports = app => {
     user.save(err => {
       if (err) return res.status(400).send({ message: err });
 
-      console.log(config.secret);
       // create a token
       const token = jwt.sign({ id: user._id }, config.secret, {
         expiresIn: 86400 // expires in 24 hours
@@ -26,34 +28,13 @@ module.exports = app => {
     });
   });
 
-  app.get('/api/me', (req, res) => {
-    const token = req.headers['x-access-token'];
-
-    if (!token)
-      return res
-        .status(401)
-        .send({ auth: false, message: 'No token provided.' });
-
-    jwt.verify(token, config.secret, (err, decoded) => {
+  app.get('/api/me', verifyToken, (req, res, next) => {
+    User.findById(req.userId, { password: 0 }, (err, user) => {
       if (err)
-        return res
-          .status(500)
-          .send({ auth: false, message: 'Failed to authenticate token.' });
+        return res.status(500).send('There was a problem finding the user.');
+      if (!user) return res.status(404).send('No user found.');
 
-      User.findById(
-        decoded.id,
-        { password: 0 }, // projection
-        (error, user) => {
-          if (error)
-            return res
-              .status(500)
-              .send('There was a problem finding the user.');
-
-          if (!user) return res.status(404).send('No user found.');
-
-          res.status(200).send(user);
-        }
-      );
+      res.status(200).send(user);
     });
   });
 
