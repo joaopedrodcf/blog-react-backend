@@ -14,7 +14,9 @@ mongoose.Promise = global.Promise;
 
 const app = express();
 
-const port = 8000;
+// Need in production because
+// https://stackoverflow.com/questions/15693192/heroku-node-js-error-web-process-failed-to-bind-to-port-within-60-seconds-of
+const port = process.env.PORT || 8000;
 
 const corsOptions = {
   origin: process.env.ENDPOINT,
