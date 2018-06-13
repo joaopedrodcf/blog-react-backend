@@ -30,14 +30,16 @@ You need to install Node.js
 
 ### Heroku (TODO)
 
-This webapp is deployed in heroku , watchout for the change names to lower case!
-for example EmailController.js turns in emailController.js
+This webapp is deployed in heroku
+
+### MLAB
+
+This webapp uses mongogb as database
 
 ## Built With
 
 * [npm](https://github.com/npm/npm) - Package manager for javascript
 * [node](https://github.com/nodejs/node) - Node.js JavaScript runtime
-
 
 * [express](https://github.com/expressjs/express) - Fast, unopinionated, minimalist web framework for node.
 * [dotenv](https://github.com/motdotla/dotenv) - Loads environment variables from .env for nodejs projects.

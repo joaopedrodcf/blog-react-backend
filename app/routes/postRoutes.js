@@ -18,4 +18,24 @@ module.exports = app => {
       return res.status(201).send({ message: 'Post created' });
     });
   });
+
+  app.get('/api/posts/:page', (req, res, next) => {
+    const perPage = 2;
+    const page = req.params.page || 1;
+
+    Post.find({})
+      .skip(perPage * page - perPage)
+      .limit(perPage)
+      .exec((err, posts) => {
+        Post.count().exec((error, count) => {
+          if (error) return next(error);
+
+          res.status(200).send({
+            posts,
+            current: page,
+            pages: Math.ceil(count / perPage)
+          });
+        });
+      });
+  });
 };
