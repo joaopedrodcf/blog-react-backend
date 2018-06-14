@@ -37,6 +37,7 @@ module.exports = app => {
 
     Post.find({})
       .skip(perPage * page - perPage)
+      .sort('-date')
       .limit(perPage)
       .exec((err, posts) => {
         Post.count().exec((error, count) => {
