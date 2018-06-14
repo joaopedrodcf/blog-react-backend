@@ -19,9 +19,21 @@ module.exports = app => {
     });
   });
 
+  app.get('/api/post/:id', (req, res) => {
+    const { id } = req.params || 1;
+
+    Post.findById(id, (err, post) => {
+      if (err)
+        return res.status(500).send('There was a problem finding the post.');
+      if (!post) return res.status(404).send('No post found.');
+
+      res.status(200).send(post);
+    });
+  });
+
   app.get('/api/posts/:page', (req, res, next) => {
     const perPage = 2;
-    const page = req.params.page || 1;
+    const { page } = req.params || 1;
 
     Post.find({})
       .skip(perPage * page - perPage)
