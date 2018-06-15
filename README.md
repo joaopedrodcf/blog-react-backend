@@ -28,13 +28,17 @@ yarn run dev
 
 You need to install Node.js
 
-### Heroku (TODO)
+### Heroku
 
 This webapp is deployed in heroku
+* [heroku](www.heroku.com)
 
 ### MLAB
 
 This webapp uses mongogb as database
+* [mlab](www.mlab.com)
+
+It stores posts and users there
 
 ## Built With
 
@@ -48,5 +52,7 @@ This webapp uses mongogb as database
 * [mongoose](https://github.com/Automattic/mongoose) - MongoDB object modeling designed to work in an asynchronous environment.
 * [nodemailer](https://github.com/nodemailer/nodemailer) - Send e-mails with Node.JS – easy as cake!
 * [node.bcrypt.js](https://github.com/kelektiv/node.bcrypt.js) - bcrypt for NodeJs 
+* [jsonwebtoken](https://github.com/auth0/node-jsonwebtoken) - JsonWebToken implementation for node.js
 
 * [nodemon](https://github.com/remy/nodemon) - Monitor for any changes in your node.js application and automatically restart the server - perfect for development
+
