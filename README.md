@@ -53,6 +53,8 @@ It stores posts and users there
 * [nodemailer](https://github.com/nodemailer/nodemailer) - Send e-mails with Node.JS – easy as cake!
 * [node.bcrypt.js](https://github.com/kelektiv/node.bcrypt.js) - bcrypt for NodeJs 
 * [jsonwebtoken](https://github.com/auth0/node-jsonwebtoken) - JsonWebToken implementation for node.js
+* [cloudinary](https://github.com/cloudinary/cloudinary_npm) - Cloudinary NPM for node.js integration 
+* [multer](https://github.com/expressjs/multer) - Node.js middleware for handling `multipart/form-data`. 
 
 * [nodemon](https://github.com/remy/nodemon) - Monitor for any changes in your node.js application and automatically restart the server - perfect for development
 

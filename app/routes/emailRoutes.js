@@ -21,7 +21,7 @@ module.exports = app => {
     text: ''
   };
 
-  app.post('/send-email', (req, res) => {
+  app.post('/api/send-email', (req, res) => {
     const { name, email, message } = req.body;
 
     // Strangely it must be == instead of ===
