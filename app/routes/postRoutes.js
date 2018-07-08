@@ -1,21 +1,51 @@
 /* eslint-disable consistent-return */
+const cloudinary = require('cloudinary');
+const multer = require('multer');
 
 const Post = require('../model/Post');
 
 module.exports = app => {
-  app.post('/api/post', (req, res) => {
+  const cloudName = process.env.CLOUD_NAME;
+  const apiKey = process.env.API_KEY;
+  const apiSecret = process.env.API_SECRET;
+
+  cloudinary.config({
+    cloud_name: cloudName,
+    api_key: apiKey,
+    api_secret: apiSecret
+  });
+
+  const storage = multer.diskStorage({
+    filename(req, file, cb) {
+      cb(null, `${file.fieldname}-${Date.now()}.png`);
+    }
+  });
+
+  const upload = multer({ storage });
+
+  app.post('/api/post', upload.single('image'), (req, res) => {
     const { body } = req;
-    console.log(body);
 
-    const post = new Post();
+    function createPost(image) {
+      return new Promise(resolve => {
+        const post = new Post();
 
-    // For some reason can use the spread operator copy
-    Object.assign(post, body);
+        Object.assign(post, body);
+        post.image = image;
 
-    post.save(err => {
-      if (err) return res.status(400).send({ message: err });
+        resolve(post);
+      });
+    }
 
-      return res.status(201).send({ message: 'Post created' });
+    cloudinary.uploader.upload(req.file.path, async result => {
+      const { url } = result;
+      const post = await createPost(url);
+
+      post.save(err => {
+        if (err) return res.status(400).send({ message: err });
+
+        return res.status(201).send({ message: 'Post created' });
+      });
     });
   });
 
