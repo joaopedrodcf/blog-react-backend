@@ -38,8 +38,8 @@ module.exports = app => {
     }
 
     cloudinary.uploader.upload(req.file.path, async result => {
-      const { url } = result;
-      const post = await createPost(url);
+      const { secure_url } = result;
+      const post = await createPost(secure_url);
 
       post.save(err => {
         if (err) return res.status(400).send({ message: err });
