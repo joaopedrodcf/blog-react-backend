@@ -26,13 +26,15 @@ module.exports = app => {
 
     // Strangely it must be == instead of ===
     if (name == null || email == null || message == null)
-      return res.status(500).send('Missing parameters');
+      return res.status(500).send({ message: 'Missing parameters' });
 
     mailOptions.text = `Name:${name}\nEmail:${email}\nMessage:${message}`;
 
     transporter.sendMail(mailOptions, (error, info) => {
       if (error)
-        return res.status(500).send('There was a problem sending the email');
+        return res
+          .status(500)
+          .send({ message: 'There was a problem sending the email' });
 
       return res.status(200).send(info);
     });

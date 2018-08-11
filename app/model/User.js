@@ -16,7 +16,13 @@ const UserSchema = new mongoose.Schema({
   password: {
     type: String,
     default: ''
-  }
+  },
+  posts: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Post'
+    }
+  ]
 });
 
 // Don't try to use arrow functions here ...

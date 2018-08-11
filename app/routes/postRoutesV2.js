@@ -2,22 +2,40 @@
 
 const Post = require('../model/Post');
 const { upload, cloudinarySaveImage } = require('../utils/cloudinaryUtils.js');
+const User = require('../model/User');
+const verifyToken = require('./verifyToken');
 
 module.exports = app => {
-  app.post('/api/post', upload.single('image'), (req, res) => {
+  app.post('/api/post', [verifyToken, upload.single('image')], (req, res) => {
     const { body } = req;
     const { title, description, text } = body;
 
-    cloudinarySaveImage(req).then(({ secure_url }) => {
-      if (title == null || description == null || text == null)
-        return res.status(500).send({ message: 'Missing parameters' });
+    if (title == null || description == null || text == null)
+      return res.status(500).send({ message: 'Missing parameters' });
 
-      const post = new Post({ title, description, text, image: secure_url });
+    User.findById(req.userId, { password: 0 }, (err, user) => {
+      if (err)
+        return res
+          .status(500)
+          .send({ message: 'There was a problem finding the user.' });
+      if (!user) return res.status(404).send({ message: 'No user found.' });
 
-      post.save(err => {
-        if (err) return res.status(400).send({ message: err });
+      return user;
+    }).then(user => {
+      cloudinarySaveImage(req).then(({ secure_url }) => {
+        const post = new Post({
+          title,
+          description,
+          text,
+          image: secure_url,
+          autor: user
+        });
 
-        return res.status(201).send({ message: 'Post created' });
+        post.save(err => {
+          if (err) return res.status(400).send({ message: err });
+
+          return res.status(201).send({ message: 'Post created' });
+        });
       });
     });
   });

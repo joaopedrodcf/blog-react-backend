@@ -2,12 +2,9 @@
 /* eslint-disable no-underscore-dangle */
 /* eslint-disable no-unused-vars */
 
-// AuthController.js
 const jwt = require('jsonwebtoken');
 const config = require('../../config');
-
 const User = require('../model/User');
-
 const verifyToken = require('./verifyToken');
 
 module.exports = app => {
@@ -31,8 +28,10 @@ module.exports = app => {
   app.get('/api/me', verifyToken, (req, res, next) => {
     User.findById(req.userId, { password: 0 }, (err, user) => {
       if (err)
-        return res.status(500).send('There was a problem finding the user.');
-      if (!user) return res.status(404).send('No user found.');
+        return res
+          .status(500)
+          .send({ message: 'There was a problem finding the user.' });
+      if (!user) return res.status(404).send({ message: 'No user found.' });
 
       res.status(200).send(user);
     });
@@ -42,8 +41,9 @@ module.exports = app => {
     const { email, password } = req.body;
 
     User.findOne({ email }, (err, user) => {
-      if (err) return res.status(500).send('Error on the server.');
-      if (!user) return res.status(404).send('No user found.');
+      if (err) return res.status(500).send({ message: 'Error on the server.' });
+
+      if (!user) return res.status(404).send({ message: 'No user found.' });
 
       user.comparePassword(password, (error, isMatch) => {
         if (error) return res.status(401).send({ auth: false, token: null });

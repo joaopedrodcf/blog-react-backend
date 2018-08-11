@@ -1,9 +1,6 @@
 {
   "presets": [
-    "es2015",
-    "react",
-    "react-native",
-    "flow"
+    "env"
   ],
   "retainLines": true
 }

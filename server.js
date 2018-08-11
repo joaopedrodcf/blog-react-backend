@@ -1,14 +1,11 @@
-// server.js
-
 const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
-const db = require('./config/db');
-
 const cors = require('cors');
 require('dotenv').config();
+const db = require('./app/config/db');
+const routes = require('./app/routes');
 
-// Set up Mongoose
 mongoose.connect(db.db_dev);
 mongoose.Promise = global.Promise;
 
@@ -24,12 +21,19 @@ const corsOptions = {
 };
 
 app.use(cors(corsOptions));
-
 app.use(bodyParser.json()); // support json encoded bodies
 app.use(bodyParser.urlencoded({ extended: true }));
 
-require('./app/routes')(app, {});
+routes(app);
 
-app.listen(port, () => {
-  console.log(`We are live on ${port}`);
-});
+// Node env for tests to not listen before tests
+// https://blog.campvanilla.com/jest-expressjs-and-the-eaddrinuse-error-bac39356c33a
+// trim because of windows
+// https://stackoverflow.com/questions/28659826/process-env-node-env-not-matching-development-no-matter-what
+if (process.env.NODE_ENV.trim() !== 'test') {
+  app.listen(port, () => {
+    console.log(`Listening in port: ${port}`);
+  });
+}
+
+module.exports = { app };
