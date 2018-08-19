@@ -6,7 +6,7 @@ describe('User routes', () => {
     await request(app)
       .post('/api/register')
       .send({
-        email: 'email3@gmail.com',
+        email: 'email4@gmail.com',
         password: 'password'
       })
       .set('Accept', 'application/json')

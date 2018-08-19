@@ -3,21 +3,21 @@ const mongoose = require('mongoose');
 const PostSchema = new mongoose.Schema({
   title: {
     type: String,
-    default: ''
+    required: true
   },
   description: {
     type: String,
-    default: ''
+    required: true
   },
   text: {
     type: String,
-    default: ''
+    required: true
   },
   image: {
     type: String,
-    default: ''
+    required: true
   },
-  date: { type: Date, default: Date.now },
+  date: { type: Date, default: Date.now, required: true },
   author: [
     {
       type: mongoose.Schema.Types.ObjectId,
