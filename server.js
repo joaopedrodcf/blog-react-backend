@@ -2,9 +2,11 @@ const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const cors = require('cors');
-require('dotenv').config();
+const dotenv = require('dotenv');
 const db = require('./app/config/db');
 const routes = require('./app/routes');
+
+dotenv.config();
 
 mongoose.connect(db.db_dev);
 mongoose.Promise = global.Promise;

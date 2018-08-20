@@ -10,7 +10,7 @@ describe('User routes', () => {
     await request(app)
       .post('/api/register')
       .send({
-        email: 'email@gmail.com',
+        email: 'email1@gmail.com',
         password: 'password'
       })
       .set('Accept', 'application/json')
@@ -30,6 +30,16 @@ describe('User routes', () => {
   });
 
   it('should login return 200', async done => {
+    await Promise.resolve(
+      request(app)
+        .post('/api/register')
+        .send({
+          email: 'email@gmail.com',
+          password: 'password'
+        })
+        .set('Accept', 'application/json')
+    );
+
     await request(app)
       .post('/api/login')
       .send({
