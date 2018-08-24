@@ -6,13 +6,13 @@ const request = require('supertest');
 // x-www-form-urlencoded
 // https://stackoverflow.com/questions/41940179/how-do-i-send-an-object-along-with-an-attached-file-in-a-multipart-superagent-re
 
-describe('Post routes', () => {
-  beforeAll(() => {
-    mongoose.connection.dropDatabase();
-  });
+let response;
 
-  it('should post creation return 200', async done => {
-    const response = await Promise.resolve(
+describe('Post routes', () => {
+  beforeAll(async () => {
+    mongoose.connection.dropDatabase();
+
+    response = await Promise.resolve(
       request(app)
         .post('/api/register')
         .send({
@@ -21,7 +21,9 @@ describe('Post routes', () => {
         })
         .set('Accept', 'application/json')
     );
+  });
 
+  it('should respond with a 201 with valid parameters', async done => {
     await request(app)
       .post('/api/post')
       .field('title', 'Lost airplane')

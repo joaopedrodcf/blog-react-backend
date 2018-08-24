@@ -58,3 +58,46 @@ It stores posts and users there
 
 * [nodemon](https://github.com/remy/nodemon) - Monitor for any changes in your node.js application and automatically restart the server - perfect for development
 
+# Docs
+
+- This docs contains useful information that helped me build this API and there references
+- It can be useful in other projects and for others
+
+## Server.js
+
+```
+const port = process.env.PORT || 8000;
+```
+
+- This ``` || 8000; ``` part is really important because the port can't be fixed.
+- Heroku dinamically assigns a port to the app, so you need to use this to work with heroku
+    - source: https://stackoverflow.com/questions/15693192/heroku-node-js-error-web-process-failed-to-bind-to-port-within-60-seconds-of
+ 
+```
+const corsOptions = {
+  origin: process.env.ENDPOINT,
+  optionsSuccessStatus: 200
+};
+```
+
+- So this configuration is important to only allow calls from the specific endpoint 
+- The configurations can be found in express site
+    - source: https://expressjs.com/en/resources/middleware/cors.html
+
+```
+if (process.env.NODE_ENV !== 'test') {
+  app.server = app.listen(port);
+  console.log(`listening on port ${port}`);
+}
+```
+
+- We only listen if it's not NODE_ENV of test
+- This env variable is automaticly defined
+    - source: https://blog.campvanilla.com/jest-expressjs-and-the-eaddrinuse-error-bac39356c33a
+
+
+## tests
+
+- We use it instead of tests because it is an alias for test
+    - source: https://stackoverflow.com/questions/45778192/what-is-the-difference-between-it-and-test-in-jest
+

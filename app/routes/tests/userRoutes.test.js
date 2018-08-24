@@ -6,62 +6,66 @@ describe('User routes', () => {
     mongoose.connection.dropDatabase();
   });
 
-  it('should register return 200', async done => {
-    await request(app)
-      .post('/api/register')
-      .send({
-        email: 'email1@gmail.com',
-        password: 'password'
-      })
-      .set('Accept', 'application/json')
-      .expect(200);
-
-    done();
-  });
-
-  it('should register return 400', async done => {
-    await request(app)
-      .post('/api/register')
-      .send({})
-      .set('Accept', 'application/json')
-      .expect(400);
-
-    done();
-  });
-
-  it('should login return 200', async done => {
-    await Promise.resolve(
-      request(app)
+  describe('register routes', () => {
+    it('should respond with a 200 with valid parameters', async done => {
+      await request(app)
         .post('/api/register')
+        .send({
+          email: 'email1@gmail.com',
+          password: 'password'
+        })
+        .set('Accept', 'application/json')
+        .expect(200);
+
+      done();
+    });
+
+    it('should respond with a 400 with invalid parameters', async done => {
+      await request(app)
+        .post('/api/register')
+        .send({})
+        .set('Accept', 'application/json')
+        .expect(400);
+
+      done();
+    });
+  });
+
+  describe('login routes', () => {
+    it('should respond with a 200 with valid parameters', async done => {
+      await Promise.resolve(
+        request(app)
+          .post('/api/register')
+          .send({
+            email: 'email@gmail.com',
+            password: 'password'
+          })
+          .set('Accept', 'application/json')
+      );
+
+      await request(app)
+        .post('/api/login')
         .send({
           email: 'email@gmail.com',
           password: 'password'
         })
         .set('Accept', 'application/json')
-    );
+        .expect(200);
 
-    await request(app)
-      .post('/api/login')
-      .send({
-        email: 'email@gmail.com',
-        password: 'password'
-      })
-      .set('Accept', 'application/json')
-      .expect(200);
+      done();
+    });
 
-    done();
-  });
+    it('should respond with a 404 with invalid parameters', async done => {
+      await request(app)
+        .post('/api/login')
+        .send({
+          email: '',
+          password: ''
+        })
+        .set('Accept', 'application/json')
+        .expect(404);
 
-  it('should login return 404', async done => {
-    await request(app)
-      .post('/api/login')
-      .send({
-        email: '',
-        password: ''
-      })
-      .set('Accept', 'application/json')
-      .expect(404);
-
-    done();
+      done();
+    });
   });
 });

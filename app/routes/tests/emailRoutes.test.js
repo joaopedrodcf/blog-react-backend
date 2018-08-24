@@ -1,8 +1,12 @@
-const { app } = require('../../../server');
+const { app, mongoose } = require('../../../server');
 const request = require('supertest');
 
 describe('Email routes', () => {
-  it('should return 200', async done => {
+  beforeAll(() => {
+    mongoose.connection.dropDatabase();
+  });
+
+  it('should respond with a 200 with valid parameters', async done => {
     await request(app)
       .post('/api/send-email')
       .send({
@@ -16,7 +20,7 @@ describe('Email routes', () => {
     done();
   });
 
-  it('should return 500', async done => {
+  it('should respond with a 500 with invalid parameters', async done => {
     await request(app)
       .post('/api/send-email')
       .send({})
