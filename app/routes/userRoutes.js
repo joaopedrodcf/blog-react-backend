@@ -6,11 +6,26 @@ const jwt = require('jsonwebtoken');
 const config = require('../../config');
 const User = require('../model/User');
 const verifyToken = require('./verifyToken');
+const Joi = require('joi');
+
+const schema = Joi.object().keys({
+  email: Joi.string()
+    .email()
+    .required(),
+  password: Joi.string().required()
+});
+
+const validateSchema = (req, res, next) => {
+  Joi.validate(req.body, schema, err => {
+    if (err) return res.status(500).send({ message: 'Missing parameters' });
+
+    next();
+  });
+};
 
 module.exports = app => {
-  app.post('/api/register', (req, res) => {
+  app.post('/api/register', validateSchema, (req, res) => {
     const user = new User();
-
     Object.assign(user, req.body);
 
     user.save(err => {
@@ -31,13 +46,14 @@ module.exports = app => {
         return res
           .status(500)
           .send({ message: 'There was a problem finding the user.' });
+
       if (!user) return res.status(404).send({ message: 'No user found.' });
 
       res.status(200).send(user);
     });
   });
 
-  app.post('/api/login', (req, res) => {
+  app.post('/api/login', validateSchema, (req, res, next) => {
     const { email, password } = req.body;
 
     User.findOne({ email }, (err, user) => {

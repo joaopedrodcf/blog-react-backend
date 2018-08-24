@@ -1,6 +1,23 @@
 /* eslint-disable consistent-return */
 
 const nodemailer = require('nodemailer');
+const Joi = require('joi');
+
+const schema = Joi.object().keys({
+  name: Joi.string().required(),
+  email: Joi.string()
+    .email()
+    .required(),
+  message: Joi.string().required()
+});
+
+const validateSchema = (req, res, next) => {
+  Joi.validate(req.body, schema, err => {
+    if (err) return res.status(500).send({ message: 'Missing parameters' });
+
+    next();
+  });
+};
 
 module.exports = app => {
   const user = process.env.GMAIL_USER;
@@ -21,12 +38,8 @@ module.exports = app => {
     text: ''
   };
 
-  app.post('/api/send-email', (req, res) => {
+  app.post('/api/send-email', validateSchema, (req, res) => {
     const { name, email, message } = req.body;
-
-    // Strangely it must be == instead of ===
-    if (name == null || email == null || message == null)
-      return res.status(500).send({ message: 'Missing parameters' });
 
     mailOptions.text = `Name:${name}\nEmail:${email}\nMessage:${message}`;
 

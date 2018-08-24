@@ -4,24 +4,9 @@ Node, Express and Mongo DB REST API serving the project https://github.com/joaop
 
 ## Getting Started
 
-First just
-
-```
-npm init
-```
-
-Dependencys
-```
-yarn add express dotenv cors body-parser mongoose bcrypt
-```
-
-```
-yarn add --dev nodemon
-```
-
 To run the server with nodemon
 ```
-yarn run dev
+yarn dev
 ```
 
 ### Prerequisites
