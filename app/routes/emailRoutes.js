@@ -13,7 +13,7 @@ const schema = Joi.object().keys({
 
 const validateSchema = (req, res, next) => {
   Joi.validate(req.body, schema, err => {
-    if (err) return res.status(500).send({ message: 'Missing parameters' });
+    if (err) return res.status(400).send({ message: 'Missing parameters' });
 
     next();
   });

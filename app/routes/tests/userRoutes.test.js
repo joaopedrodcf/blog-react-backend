@@ -55,7 +55,7 @@ describe('User routes', () => {
       done();
     });
 
-    it('should respond with a 404 with invalid parameters', async done => {
+    it('should respond with a 400 with invalid parameters', async done => {
       await request(app)
         .post('/api/login')
         .send({
@@ -63,7 +63,7 @@ describe('User routes', () => {
           password: ''
         })
         .set('Accept', 'application/json')
-        .expect(404);
+        .expect(400);
 
       done();
     });

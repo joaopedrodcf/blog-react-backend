@@ -20,12 +20,12 @@ describe('Email routes', () => {
     done();
   });
 
-  it('should respond with a 500 with invalid parameters', async done => {
+  it('should respond with a 400 with invalid parameters', async done => {
     await request(app)
       .post('/api/send-email')
       .send({})
       .set('Accept', 'application/json')
-      .expect(500);
+      .expect(400);
 
     done();
   });
