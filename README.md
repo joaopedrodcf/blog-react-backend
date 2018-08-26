@@ -81,6 +81,12 @@ if (process.env.NODE_ENV !== 'test') {
     - source: https://blog.campvanilla.com/jest-expressjs-and-the-eaddrinuse-error-bac39356c33a
 
 
+```
+app.use(bodyParser.json()); 
+```
+
+- support json encoded bodies
+
 ## tests
 
 - We use it instead of tests because it is an alias for test

@@ -27,7 +27,7 @@ const corsOptions = {
 // load app middlewares
 app.use(logger('dev'));
 app.use(cors(corsOptions));
-app.use(bodyParser.json()); // support json encoded bodies
+app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 routes(app);
