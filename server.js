@@ -1,4 +1,5 @@
-const express = require('express');
+import express from 'express';
+
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const cors = require('cors');
@@ -11,8 +12,8 @@ const routes = require('./app/routes');
 dotenv.config();
 
 mongoose.connect(
-  db.db_dev,
-  { useNewUrlParser: true }
+    db.db_dev,
+    { useNewUrlParser: true }
 );
 mongoose.Promise = global.Promise;
 
@@ -20,8 +21,8 @@ const app = express();
 const port = process.env.PORT || 8000;
 
 const corsOptions = {
-  origin: process.env.ENDPOINT,
-  optionsSuccessStatus: 200
+    origin: process.env.ENDPOINT,
+    optionsSuccessStatus: 200
 };
 
 // load app middlewares
@@ -33,8 +34,8 @@ app.use(bodyParser.urlencoded({ extended: true }));
 routes(app);
 
 if (process.env.NODE_ENV !== 'test') {
-  app.server = app.listen(port);
-  console.log(`listening on port ${port}`);
+    app.server = app.listen(port);
+    console.log(`listening on port ${port}`);
 }
 
 module.exports = { app, mongoose };

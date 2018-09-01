@@ -1,6 +1,6 @@
 {
-  "presets": [
-    "env"
-  ],
-  "retainLines": true
+    "presets": [
+        "env"
+    ],
+    "retainLines": true
 }

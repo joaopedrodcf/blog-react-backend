@@ -57,11 +57,11 @@ const port = process.env.PORT || 8000;
 - This ``` || 8000; ``` part is really important because the port can't be fixed.
 - Heroku dinamically assigns a port to the app, so you need to use this to work with heroku
     - source: https://stackoverflow.com/questions/15693192/heroku-node-js-error-web-process-failed-to-bind-to-port-within-60-seconds-of
- 
+
 ```
 const corsOptions = {
-  origin: process.env.ENDPOINT,
-  optionsSuccessStatus: 200
+    origin: process.env.ENDPOINT,
+    optionsSuccessStatus: 200
 };
 ```
 
@@ -71,8 +71,8 @@ const corsOptions = {
 
 ```
 if (process.env.NODE_ENV !== 'test') {
-  app.server = app.listen(port);
-  console.log(`listening on port ${port}`);
+    app.server = app.listen(port);
+    console.log(`listening on port ${port}`);
 }
 ```
 
