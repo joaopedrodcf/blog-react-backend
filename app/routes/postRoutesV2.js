@@ -52,16 +52,13 @@ module.exports = app => {
                 return user;
             }).then(user => {
                 cloudinarySaveImage(req).then(({ secure_url }) => {
-                    console.log(user);
                     const post = new Post({
                         title,
                         description,
                         text,
                         image: secure_url,
-                        autor: user._id
+                        author: user._id
                     });
-
-                    console.log(post);
 
                     post.save(err => {
                         if (err) return res.status(400).send({ message: err });
