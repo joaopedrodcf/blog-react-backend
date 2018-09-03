@@ -4,9 +4,9 @@
     "description": "",
     "main": "index.js",
     "scripts": {
-        "coverage": "jest --collectCoverageFrom=app/**.js --coverage app",
+        "coverage": "jest --collectCoverageFrom=app/**.js --coverage src",
         "dev": "nodemon server.js",
-        "lint": "eslint app",
+        "lint": "eslint src",
         "precommit": "lint-staged",
         "test": "jest"
     },
@@ -41,6 +41,7 @@
         "babel-preset-env": "^1.7.0",
         "eslint": "4.9.0",
         "eslint-config-airbnb": "16.1.0",
+        "eslint-config-joaopedrodcf": "^1.0.0",
         "eslint-config-prettier": "^2.9.0",
         "eslint-plugin-import": "2.7.0",
         "eslint-plugin-jest": "^21.21.0",
