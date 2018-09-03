@@ -29,7 +29,7 @@ describe('Post routes', () => {
             .field('title', 'Lost airplane')
             .field('description', 'This is a story about an missing F1')
             .field('text', 'This F1 was found in Alasca ...')
-            .attach('image', 'app/assets/cars.jpg')
+            .attach('image', 'src/assets/cars.jpg')
             .set('Accept', 'application/x-www-form-urlencoded')
             .set('x-access-token', response.body.token)
             .expect(201);

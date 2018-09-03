@@ -6,8 +6,8 @@ const cors = require('cors');
 const dotenv = require('dotenv');
 const logger = require('morgan');
 
-const db = require('./app/config/db');
-const routes = require('./app/routes');
+const db = require('./src/config/db');
+const routes = require('./src/routes');
 
 dotenv.config();
 

@@ -1,5 +1,5 @@
 const userRoutes = require('./userRoutes');
-const postRoutes = require('./postRoutesV2');
+const postRoutes = require('./postRoutes');
 const emailRoutes = require('./emailRoutes');
 
 module.exports = app => {
