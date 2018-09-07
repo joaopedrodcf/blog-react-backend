@@ -1632,9 +1632,9 @@ eslint-config-airbnb@16.1.0:
   dependencies:
     eslint-config-airbnb-base "^12.1.0"
 
-eslint-config-joaopedrodcf@^1.0.0:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/eslint-config-joaopedrodcf/-/eslint-config-joaopedrodcf-1.0.0.tgz#230326f37554e9715e98062810d571b0cd050f33"
+eslint-config-joaopedrodcf@^1.0.3:
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/eslint-config-joaopedrodcf/-/eslint-config-joaopedrodcf-1.0.3.tgz#da925bd9e3d02fa771a83f25a7a70b6986c03855"
 
 eslint-config-prettier@^2.9.0:
   version "2.10.0"
@@ -4290,9 +4290,9 @@ preserve@^0.2.0:
   version "0.2.0"
   resolved "https://registry.yarnpkg.com/preserve/-/preserve-0.2.0.tgz#815ed1f6ebc65926f865b310c0713bcb3315ce4b"
 
-prettier-config-joaopedrodcf@^1.0.1:
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/prettier-config-joaopedrodcf/-/prettier-config-joaopedrodcf-1.0.1.tgz#8dbc3c7693b0de0101d67210dab9052a73dd5cda"
+prettier-config-joaopedrodcf@^1.0.2:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/prettier-config-joaopedrodcf/-/prettier-config-joaopedrodcf-1.0.2.tgz#6249e89d93384b6e3101d57976e0de82dbd6097b"
 
 prettier@^1.14.2:
   version "1.14.2"

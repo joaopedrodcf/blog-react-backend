@@ -25,7 +25,7 @@ const token = Joi.string().required();
 
 const validateToken = (req, res, next) => {
     Joi.validate(req.headers['x-access-token'], token, err => {
-        if (err) return res.status(400).send({ message: 'Missing parameters' });
+        if (err) return res.status(400).send({ message: 'Missing token' });
 
         next();
     });

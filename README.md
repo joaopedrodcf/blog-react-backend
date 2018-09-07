@@ -50,7 +50,7 @@ It stores posts and users there
 
 ## Server.js
 
-```
+```javascript
 const port = process.env.PORT || 8000;
 ```
 
@@ -58,7 +58,7 @@ const port = process.env.PORT || 8000;
 - Heroku dinamically assigns a port to the app, so you need to use this to work with heroku
     - source: https://stackoverflow.com/questions/15693192/heroku-node-js-error-web-process-failed-to-bind-to-port-within-60-seconds-of
 
-```
+```javascript
 const corsOptions = {
     origin: process.env.ENDPOINT,
     optionsSuccessStatus: 200
@@ -69,7 +69,7 @@ const corsOptions = {
 - The configurations can be found in express site
     - source: https://expressjs.com/en/resources/middleware/cors.html
 
-```
+```javascript
 if (process.env.NODE_ENV !== 'test') {
     app.server = app.listen(port);
     console.log(`listening on port ${port}`);
@@ -81,7 +81,7 @@ if (process.env.NODE_ENV !== 'test') {
     - source: https://blog.campvanilla.com/jest-expressjs-and-the-eaddrinuse-error-bac39356c33a
 
 
-```
+```javascript
 app.use(bodyParser.json()); 
 ```
 
