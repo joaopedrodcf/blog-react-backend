@@ -4290,9 +4290,9 @@ preserve@^0.2.0:
   version "0.2.0"
   resolved "https://registry.yarnpkg.com/preserve/-/preserve-0.2.0.tgz#815ed1f6ebc65926f865b310c0713bcb3315ce4b"
 
-prettier-config-joaopedrodcf@^1.0.2:
-  version "1.0.2"
-  resolved "https://registry.yarnpkg.com/prettier-config-joaopedrodcf/-/prettier-config-joaopedrodcf-1.0.2.tgz#6249e89d93384b6e3101d57976e0de82dbd6097b"
+prettier-config-joaopedrodcf@^1.0.3:
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/prettier-config-joaopedrodcf/-/prettier-config-joaopedrodcf-1.0.3.tgz#08c2d445de198b25b43e314f3f4f41ecaf57375a"
 
 prettier@^1.14.2:
   version "1.14.2"
