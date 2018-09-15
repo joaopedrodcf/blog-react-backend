@@ -103,7 +103,7 @@ module.exports = app => {
 
                 return res.status(200).send({
                     posts,
-                    current: page,
+                    current: Number(page),
                     pages: Math.ceil(count / perPage)
                 });
             });
