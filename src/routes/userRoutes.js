@@ -3,10 +3,10 @@
 /* eslint-disable no-unused-vars */
 
 const jwt = require('jsonwebtoken');
+const Joi = require('joi');
 const config = require('../../config');
 const User = require('../model/User');
 const verifyToken = require('./verifyToken');
-const Joi = require('joi');
 
 const schema = Joi.object().keys({
     email: Joi.string()

@@ -1,5 +1,7 @@
 /* eslint-disable consistent-return */
 /* eslint-disable no-underscore-dangle */
+/* eslint-disable camelcase */
+
 const Joi = require('joi');
 
 const Post = require('../model/Post');

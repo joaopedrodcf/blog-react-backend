@@ -1,5 +1,6 @@
 {
     "extends": [
-        "joaopedrodcf"
+        "joaopedrodcf",
+        "plugin:node/recommended"
     ]
 }
