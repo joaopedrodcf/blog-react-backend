@@ -4,9 +4,10 @@
 
 const jwt = require('jsonwebtoken');
 const Joi = require('joi');
+const verifyToken = require('./verifyToken');
+const findUserById = require('./utils');
 const config = require('../../config');
 const User = require('../model/User');
-const verifyToken = require('./verifyToken');
 
 const schema = Joi.object().keys({
     email: Joi.string()
@@ -40,18 +41,8 @@ module.exports = app => {
         });
     });
 
-    app.get('/api/me', verifyToken, (req, res, next) => {
-        User.findById(req.userId, { password: 0 }, (err, user) => {
-            if (err)
-                return res
-                    .status(500)
-                    .send({ message: 'There was a problem finding the user.' });
-
-            if (!user)
-                return res.status(404).send({ message: 'No user found.' });
-
-            res.status(200).send(user);
-        });
+    app.get('/api/me', verifyToken, findUserById, (req, res, next) => {
+        res.status(200).send(req.user);
     });
 
     app.post('/api/login', validateSchema, (req, res, next) => {
@@ -84,6 +75,5 @@ module.exports = app => {
             });
         });
     });
-
     // Dont forget that logout is not needed , when the user presses logout on client side, client side only needs to destroy the token
 };

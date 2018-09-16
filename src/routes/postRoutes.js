@@ -1,13 +1,14 @@
 /* eslint-disable consistent-return */
 /* eslint-disable no-underscore-dangle */
 /* eslint-disable camelcase */
-
+/* eslint-disable no-param-reassign */
+/* eslint-disable no-shadow */
 const Joi = require('joi');
-
-const Post = require('../model/Post');
-const { upload, cloudinarySaveImage } = require('../utils/cloudinaryUtils');
-const User = require('../model/User');
+const findUserById = require('./utils');
 const verifyToken = require('./verifyToken');
+const Post = require('../model/Post');
+const User = require('../model/User');
+const { upload, cloudinarySaveImage } = require('../utils/cloudinaryUtils');
 
 const schema = Joi.object().keys({
     title: Joi.string().required(),
@@ -40,35 +41,23 @@ module.exports = app => {
         verifyToken,
         upload.single('image'),
         validateSchema,
+        findUserById,
         (req, res) => {
             const { title, description, text } = req.body;
 
-            User.findById(req.userId, { password: 0 }, (err, user) => {
-                if (err)
-                    return res.status(500).send({
-                        message: 'There was a problem finding the user.'
-                    });
-                if (!user)
-                    return res.status(404).send({ message: 'No user found.' });
+            cloudinarySaveImage(req).then(({ secure_url }) => {
+                const post = new Post({
+                    title,
+                    description,
+                    text,
+                    image: secure_url,
+                    author: req.user._id
+                });
 
-                return user;
-            }).then(user => {
-                cloudinarySaveImage(req).then(({ secure_url }) => {
-                    const post = new Post({
-                        title,
-                        description,
-                        text,
-                        image: secure_url,
-                        author: user._id
-                    });
+                post.save(err => {
+                    if (err) return res.status(400).send({ message: err });
 
-                    post.save(err => {
-                        if (err) return res.status(400).send({ message: err });
-
-                        return res
-                            .status(201)
-                            .send({ message: 'Post created' });
-                    });
+                    return res.status(201).send({ message: 'Post created' });
                 });
             });
         }
@@ -86,7 +75,19 @@ module.exports = app => {
             if (!post)
                 return res.status(404).send({ message: 'No post found.' });
 
-            return res.status(200).send(post);
+            User.findById(post.author, { password: 0 }, (err, user) => {
+                if (err)
+                    return res.status(500).send({
+                        message: 'There was a problem finding the user.'
+                    });
+
+                if (!user)
+                    return res.status(404).send({ message: 'No user found.' });
+
+                post.author = user;
+
+                return res.status(200).send(post);
+            });
         });
     });
 

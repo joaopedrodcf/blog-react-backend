@@ -2,5 +2,8 @@
     "extends": [
         "joaopedrodcf",
         "plugin:node/recommended"
-    ]
+    ],"rules": {
+        "import/order": ["error", {"groups": [ "external", "index", "sibling", "parent", "internal","builtin"]}]
+    }
+
 }
