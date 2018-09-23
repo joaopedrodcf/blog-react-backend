@@ -91,6 +91,16 @@ app.use(bodyParser.json());
 
 - support json encoded bodies
 
+```js
+Post.findById(id)
+    .populate('author')
+    .exec((err, post) => {
+
+});
+```
+- Get info from a reference from other collection
+
+
 ## tests
 
 - We use it instead of tests because it is an alias for test

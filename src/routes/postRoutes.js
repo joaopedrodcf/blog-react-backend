@@ -7,7 +7,6 @@ const Joi = require('joi');
 const findUserById = require('./utils');
 const verifyToken = require('./verifyToken');
 const Post = require('../model/Post');
-const User = require('../model/User');
 const { upload, cloudinarySaveImage } = require('../utils/cloudinaryUtils');
 
 const schema = Joi.object().keys({
@@ -66,29 +65,18 @@ module.exports = app => {
     app.get('/api/post/:id', (req, res) => {
         const { id } = req.params || 1;
 
-        Post.findById(id, (err, post) => {
-            if (err)
-                return res
-                    .status(500)
-                    .send({ message: 'There was a problem finding the post.' });
-
-            if (!post)
-                return res.status(404).send({ message: 'No post found.' });
-
-            User.findById(post.author, { password: 0 }, (err, user) => {
+        Post.findById(id)
+            .populate('author')
+            .exec((err, post) => {
                 if (err)
                     return res.status(500).send({
-                        message: 'There was a problem finding the user.'
+                        message: 'There was a problem finding the post.'
                     });
-
-                if (!user)
-                    return res.status(404).send({ message: 'No user found.' });
-
-                post.author = user;
+                if (!post)
+                    return res.status(404).send({ message: 'No post found.' });
 
                 return res.status(200).send(post);
             });
-        });
     });
 
     app.get('/api/posts/:page', (req, res, next) => {
@@ -98,7 +86,8 @@ module.exports = app => {
         const query = Post.find({})
             .skip(perPage * page - perPage)
             .sort('-date')
-            .limit(perPage);
+            .limit(perPage)
+            .populate('author');
 
         query.exec((err, posts) => {
             Post.count().exec((error, count) => {
