@@ -67,6 +67,10 @@ module.exports = app => {
 
         Post.findById(id)
             .populate('author')
+            .populate({
+                path: 'comments',
+                populate: { path: 'author' }
+            })
             .exec((err, post) => {
                 if (err)
                     return res.status(500).send({
