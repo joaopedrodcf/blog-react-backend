@@ -1,5 +1,3 @@
-/* eslint-disable consistent-return */
-
 const User = require('../model/User');
 
 const findUserById = (req, res, next) => {

@@ -1,5 +1,3 @@
-/* eslint-disable consistent-return */
-
 const nodemailer = require('nodemailer');
 const Joi = require('joi');
 

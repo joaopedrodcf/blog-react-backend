@@ -13,6 +13,9 @@
         "precommit": "lint-staged",
         "test": "jest"
     },
+    "files": [
+        "tests"
+    ],
     "repository": {
         "type": "git",
         "url": "git+https://github.com/joaopedrodcf/blog-react-backend.git"

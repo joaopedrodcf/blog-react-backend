@@ -1,5 +1,5 @@
-const { app, mongoose } = require('../../../server');
 const request = require('supertest');
+const { app, mongoose } = require('../../../server');
 
 describe('User routes', () => {
     beforeAll(() => {

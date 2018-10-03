@@ -112,7 +112,7 @@ Post.findById(id)
 
 [source info](https://stackoverflow.com/questions/45778192/what-is-the-difference-between-it-and-test-in-jest)
 
-### mongoose populate embedded
+### Mongoose populate embedded
 
 ```js
     Post.findById(id)
@@ -125,3 +125,18 @@ Post.findById(id)
 ```
 
 [source info](https://stackoverflow.com/questions/13077609/mongoose-populate-embedded)
+
+### Test file Upload
+
+[source info](https://github.com/visionmedia/supertest/issues/259)
+[source info](https://stackoverflow.com/questions/41940179/how-do-i-send-an-object-along-with-an-attached-file-in-a-multipart-superagent-re)
+
+## Mongoose pre save schema
+
+```js
+UserSchema.pre('save', function(next) {
+
+});
+```
+
+[source info](https://stackoverflow.com/questions/45952948/mongoose-pre-function-doesnt-work-on-middle-ware-remove)

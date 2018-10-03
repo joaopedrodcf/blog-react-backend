@@ -1,7 +1,3 @@
-/* eslint-disable consistent-return */
-/* eslint-disable no-underscore-dangle */
-/* eslint-disable no-unused-vars */
-
 const jwt = require('jsonwebtoken');
 const Joi = require('joi');
 const verifyToken = require('./verifyToken');
@@ -41,11 +37,11 @@ module.exports = app => {
         });
     });
 
-    app.get('/api/me', verifyToken, findUserById, (req, res, next) => {
+    app.get('/api/me', verifyToken, findUserById, (req, res) => {
         res.status(200).send(req.user);
     });
 
-    app.post('/api/login', validateSchema, (req, res, next) => {
+    app.post('/api/login', validateSchema, (req, res) => {
         const { email, password } = req.body;
 
         User.findOne({ email }, (err, user) => {

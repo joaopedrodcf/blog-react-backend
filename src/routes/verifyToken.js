@@ -1,7 +1,3 @@
-/* eslint-disable consistent-return */
-/* eslint-disable no-underscore-dangle */
-
-// AuthController.js
 const jwt = require('jsonwebtoken');
 const config = require('../../config');
 
